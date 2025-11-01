@@ -1,0 +1,6 @@
+{
+    "Vegetative": "🌱 **Action:** The crop is in its vegetative stage. Focus on nutrient management (especially Nitrogen) and monitor for early signs of pests or disease.",
+    "Peak": "🌳 **Action:** Crops are at or near peak growth. Ensure consistent water supply and check that nutrient levels are stable for this high-demand phase.",
+    "Senescence": "🍂 **Action:** The crop is aging, and leaves are beginning to yellow. Prepare for harvest; monitor moisture levels closely for optimal timing.",
+    "Unknown Stage": "❓ **Status:** The model is unsure of the current stage. This may be due to unusual data patterns. Manual inspection is recommended."
+}

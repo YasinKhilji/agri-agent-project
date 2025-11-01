@@ -1,0 +1,30 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Large Files & Junk
+*.pt
+*.h5
+*.csv
+*.jsonl
+*.txt
+Token.txt
+*.md
+
+# Re-include our specific data files
+!crop_stage_lstm_model.h5
+!advanced_labeled_dataset.csv
+!insights.json
+!requirements.txt
+!README.md
+!AI_Agent_Architecture.md
+!Data_Science_Report.md
+
+# VS Code
+.vscode/
+
+# Our old training junk
+results-planner/
+model/planner_lora_adapter/
+finetune_data.jsonl
