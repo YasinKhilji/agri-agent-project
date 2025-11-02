@@ -1,7 +1,7 @@
 # Agri-Agent: A Proactive, Multi-Agent AI System
 **Submission for the I'mbesideyou Data Scientist Internship (2026)**
 
-* **Name:** Yasin Khilji
+* **Name:** Khilji Mohammed Yasin
 * **University:** IIT Palakkad
 * **Department:** Data Science
 
