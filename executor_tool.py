@@ -166,7 +166,7 @@ def summarize_all_fields():
 def simulate_new_day():
     """
     Loads the CSV, simulates a new day of data for all fields, and appends it.
-    This makes the agent's data dynamic for the demo.
+    This version is "stage-aware" and simulates a full life cycle.
     """
     try:
         df = pd.read_csv(DATA_FILE)
@@ -178,21 +178,38 @@ def simulate_new_day():
         all_field_ids = df['field_id'].unique()
         new_rows = []
         
+        print("Simulator: Running stage-aware simulation...")
+        
         for field_id in all_field_ids:
+            # Get the current stage for this field to decide its next step
+            current_state = run_crop_stage_analysis(field_id)
+            current_stage = current_state.get("stage", "Unknown Stage")
+            
             # Get the last row of data for this field
             last_row = df[df['field_id'] == field_id].iloc[-1].copy()
             
             # Update the date
             last_row['Date'] = new_date.strftime('%Y-%m-%d')
             
-            # Simulate a slight increase in indices (basic "growth")
-            # This is a very simple simulation
-            last_row['ndvi_normalized'] = min(last_row['ndvi_normalized'] * 1.05, 1.0) # 5% growth, capped at 1.0
-            last_row['evi_normalized'] = min(last_row['evi_normalized'] * 1.05, 1.0)
-            last_row['savi_normalized'] = min(last_row['savi_normalized'] * 1.05, 1.0)
+            # --- New Stage-Aware Logic ---
+            if current_stage == "Vegetative":
+                # Grow
+                last_row['ndvi_normalized'] = min(last_row['ndvi_normalized'] * 1.05 + np.random.rand() * 0.02, 1.0)
+                last_row['evi_normalized'] = min(last_row['evi_normalized'] * 1.05 + np.random.rand() * 0.02, 1.0)
+                last_row['savi_normalized'] = min(last_row['savi_normalized'] * 1.05 + np.random.rand() * 0.02, 1.0)
+            elif current_stage == "Peak":
+                # Start to decline
+                last_row['ndvi_normalized'] = max(last_row['ndvi_normalized'] * 0.95 - np.random.rand() * 0.03, 0.0)
+                last_row['evi_normalized'] = max(last_row['evi_normalized'] * 0.95 - np.random.rand() * 0.03, 0.0)
+                last_row['savi_normalized'] = max(last_row['savi_normalized'] * 0.95 - np.random.rand() * 0.03, 0.0)
+            elif current_stage == "Senescence":
+                # Decline faster
+                last_row['ndvi_normalized'] = max(last_row['ndvi_normalized'] * 0.90 - np.random.rand() * 0.05, 0.0)
+                last_row['evi_normalized'] = max(last_row['evi_normalized'] * 0.90 - np.random.rand() * 0.05, 0.0)
+                last_row['savi_normalized'] = max(last_row['savi_normalized'] * 0.90 - np.random.rand() * 0.05, 0.0)
             
             # Simulate a slight change in temp
-            last_row['Temperature_C'] = last_row['Temperature_C'] + (np.random.rand() - 0.5) * 2 # change by +/- 1 degree
+            last_row['Temperature_C'] = last_row['Temperature_C'] + (np.random.rand() - 0.5) * 2
             
             new_rows.append(last_row)
             
