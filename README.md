@@ -3,7 +3,7 @@
 
 * **Name:** Khilji Mohammed Yasin
 * **University:** IIT Palakkad
-* **Department:** Data Science
+* **Department:** Data Science and Engineering
 
 ---
 
